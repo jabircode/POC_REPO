@@ -27,7 +27,7 @@ pipeline {
                     echo "Backup of TEST server ${testServer} created: ${backupDirectory}/${backupFilename}"
 
                     // Run bolt script
-                    bolt script run /path/to/6509183p_script.sh --targets TESTsvr6509183p,PRODsvr6509183p
+                    sh "bolt script run /path/to/6509183p_script.sh --targets TESTsvr6509183p,PRODsvr6509183p"
                 }
                 echo 'ST2 6509183p: TEST server is backup and updated'
             }
@@ -73,7 +73,7 @@ pipeline {
                         echo 'ST5 6509183p: Proceed to Production Phase'
 
                         // Run bolt script
-                        bolt script run /path/to/6509183p_script.sh --targets TESTsvr6509183p,PRODsvr6509183p
+                        sh "bolt script run /path/to/6509183p_script.sh --targets TESTsvr6509183p,PRODsvr6509183p"
 
                     } else {
                         echo 'ST5 6509183p: Rollback Test server'
