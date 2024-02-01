@@ -1,0 +1,72 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('ST1 6509183p') {
+            steps {
+                echo 'ST1 6509183p: Environment is prepared. Start to rollout to TEST server'
+      
+            }
+        }
+
+        stage('ST2 6509183p') {
+            steps {
+                script {
+                    // Replace the following with actual commands to remove old backup and create a new one.
+                    echo '*First, remove any old backup image and create a new backup image (BKUP-TEST-image) for TEST server.'
+                    // Replace the following with the actual bolt script command.
+                    echo '*Then, update TEST server by executing "bolt script run <script>"...'
+                }
+                echo 'ST2 6509183p: TEST server is backup and updated'
+            }
+        }
+
+        stage('ST3 6509183p') {
+            steps {
+                script {
+                    // Replace with the actual curl command to execute.
+                    echo 'Execute "curl ......"'
+                }
+                echo 'ST3 6509183p: Test result for TEST server is generated: TEST-result-file'
+            }
+        }
+
+        stage('ST4 6509183p') {
+            steps {
+                echo 'ST4 6509183p: TEST server’s testing result has been inspected'
+                // Insert any steps required for inspection here.
+            }
+        }
+
+        stage('ST5 6509183p') {
+            steps {
+                script {
+                    def userInput = input(id: 'ProceedProductionOrRollbackTest', message: 'Choose Proceed Production or Rollback Test?', parameters: [choice(name: 'Choice', choices: 'Proceed Production\nRollback Test', description: 'Select your choice')])
+                    if (userInput == 'Proceed Production') {
+                        echo 'ST5 6509183p: Proceed to Production Phase'
+                        // Replace the following with the actual bolt script command.
+                        echo 'Execute "bolt script run <script>"...'
+                    } else {
+                        echo 'ST5 6509183p: Rollback Test server'
+                        // Insert commands for rollback.
+                    }
+                }
+            }
+        }
+
+        stage('ST6 6509183p') {
+            steps {
+                script {
+                    def userInput = input(id: 'ProceedProductionOrRollbackTest', message: 'Choose Proceed Production or Rollback Test?', parameters: [choice(name: 'Choice', choices: 'Proceed Production\nRollback Test', description: 'Select your choice')])
+                    if (userInput == 'Proceed Production') {
+                        echo 'ST6 6509183p: Production server is updated'
+                        // Insert any steps required for production update here.
+                    } else {
+                        echo 'ST6 6509183p: TEST server is rollback.'
+                        // Insert commands for rollback.
+                    }
+                }
+            }
+        }
+    }
+}
