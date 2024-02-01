@@ -13,9 +13,9 @@ pipeline {
                 script {
                     // Define the server and backup paths
                     def testServer = 'testsvr6509183p'
-                    def backupDirectory = '/path/to/backups' // backup directory path
+                    def backupDirectory = '.' // backup directory path
                     def backupFilename = 'BKUP-TEST-image.tar.gz' 
-                    def sourceDirectory = '/path/to/source' // directory for backup
+                    def sourceDirectory = '.' // directory for backup
                     
                     // Remove any old backup image
                     sh "rm -f ${backupDirectory}/${backupFilename}"
