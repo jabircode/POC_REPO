@@ -21,8 +21,7 @@ pipeline {
                     sh "rm -f ${backupDirectory}/${backupFilename} || true"
 
                     // Create a new backup image
-                    //sh "tar -czf ${backupDirectory}/${backupFilename} -C ${sourceDirectory} ."
-                    sh "tar -czf BKUP-TEST-image.tar.gz -C . ."
+                    sh "tar -czf ${backupDirectory}/${backupFilename} -C ${sourceDirectory} ."
                     
                     // Output for verification
                     echo "Backup of TEST server ${testServer} created: ${backupDirectory}/${backupFilename}"
