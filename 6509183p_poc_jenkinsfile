@@ -18,7 +18,7 @@ pipeline {
                     def sourceDirectory = './' // directory for backup
                     
                     // Remove any old backup image
-                    sh "rm -f ${backupDirectory}/${backupFilename}"
+                    sh "rm -f ${backupDirectory}/${backupFilename}" | true
 
                     // Create a new backup image
                     sh "tar -czf ${backupDirectory}/${backupFilename} -C ${sourceDirectory} ."
