@@ -55,7 +55,7 @@ pipeline {
                 echo 'ST4 6509183p: TEST server’s testing result has been inspected'
 
                     script {
-                        def env.userInput = input(id: 'ProceedProductionOrRollbackTest', message: 'Choose Proceed Production or Rollback Test?', parameters: [choice(name: 'Choice', choices: 'Proceed Production\nRollback Test', description: 'Select your choice')])
+                        env.userInput = input(id: 'ProceedProductionOrRollbackTest', message: 'Choose Proceed Production or Rollback Test?', parameters: [choice(name: 'Choice', choices: 'Proceed Production\nRollback Test', description: 'Select your choice')])
                     }
             }
         }
