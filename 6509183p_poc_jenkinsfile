@@ -45,7 +45,7 @@ pipeline {
                     sh "curl -Is ${testServerUrl} | head -n 1 > ${resultFilePath} || true"
 
                     // Read and echo the result for log output
-                    sh "cat ${resultFilePath}"
+                    sh "cat ${resultFilePath} || true"
 
                     // Check if the web test was successful (HTTP 200)
                     def result = readFile("${resultFilePath}").trim()
