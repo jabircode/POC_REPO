@@ -42,7 +42,7 @@ pipeline {
                     def resultFilePath = '/tmp/TEST-result-file'
 
                     // Execute the web test command and write the output to a file
-                    sh "curl -Is ${testServerUrl} | head -n 1 > ${resultFilePath}"
+                    sh "curl -Is ${testServerUrl} | head -n 1 > ${resultFilePath} || true"
 
                     // Read and echo the result for log output
                     sh "cat ${resultFilePath}"
