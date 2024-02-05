@@ -4,7 +4,7 @@
     stages {
         stage('ST1 6509183p') {
             steps {
-                echo 'ST1 6509183p: Environment is prepared. Start to rollout to TEST server'
+                echo 'ST1 6509183p: Environment is prepared. Start to rollout to TEST server '
             }
         }
 
