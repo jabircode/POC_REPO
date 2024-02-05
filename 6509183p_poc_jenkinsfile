@@ -72,7 +72,7 @@
         stage('ST5 6509183p') {
             steps {
                 script {
-                    if (env.userInput == 'Proceed Production' || true) {
+                    if (userInput == 'Proceed Production' || true) {
                         echo 'ST5 6509183p: Proceed to Production Phase'
 
                         // Run bolt script
