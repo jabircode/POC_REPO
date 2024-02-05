@@ -1,4 +1,4 @@
-pipeline {
+.pipeline {
     agent any 
 
     stages {
@@ -64,7 +64,7 @@ pipeline {
                 echo 'ST4 6509183p: TEST server’s testing result has been inspected'
 
                     script {
-                        def userInput = input(id: 'ProceedProductionOrRollbackTest', message: 'Choose Proceed Production or Rollback Test?', parameters: [choice(name: 'Choice', choices: 'Proceed Production\nRollback Test', description: 'Select your choice')])
+                        def env.userInput = input(id: 'ProceedProductionOrRollbackTest', message: 'Choose Proceed Production or Rollback Test?', parameters: [choice(name: 'Choice', choices: 'Proceed Production\nRollback Test', description: 'Select your choice')])
                     }
             }
         }
@@ -72,7 +72,7 @@ pipeline {
         stage('ST5 6509183p') {
             steps {
                 script {
-                    if (userInput == 'Proceed Production' || true) {
+                    if (env.userInput == 'Proceed Production' || true) {
                         echo 'ST5 6509183p: Proceed to Production Phase'
 
                         // Run bolt script
@@ -99,7 +99,7 @@ pipeline {
         stage('ST6 6509183p') {
             steps {
                 script {
-                    if (userInput == 'Proceed Production' || true) {
+                    if (env.userInput == 'Proceed Production' || true) {
                         echo 'ST6 6509183p: Production server is updated'
                         
                     } else {
