@@ -1,13 +1,11 @@
 pipeline {
     agent any 
-
     stages {
         stage('ST1 6509183p') {
             steps {
                 echo 'ST1 6509183p: Environment is prepared. Start to rollout to TEST server '
             }
         }
-
         stage('ST2 6509183p') {
             steps {
                 script {
@@ -19,20 +17,17 @@ pipeline {
                     
                     // Remove any old backup image
                     sh "rm -f ${backupDirectory}/${backupFilename} || true"
-
                     // Create a new backup image
                     sh "tar -czf ${backupDirectory}/${backupFilename} -C ${sourceDirectory} . || true"
                     
                     // Output for verification
                     echo "Backup of TEST server ${testServer} created: ${backupDirectory}/${backupFilename}"
-
                     // Run bolt script
                     sh "bolt script run 6509183p_script.sh --targets TESTsvr6509183p,PRODsvr6509183p || true"
                 }
                 echo 'ST2 6509183p: TEST server is backup and updated'
             }
         }
-
         stage('ST3 6509183p') {
             steps {
                 script {
@@ -40,13 +35,10 @@ pipeline {
                     def politeId = '6509183p' 
                     def testServerUrl = "http://TESTsvr${politeId}.localdomain"
                     def resultFilePath = '/tmp/TEST-result-file'
-
                     // Execute the web test command and write the output to a file
                     sh "curl -Is ${testServerUrl} | head -n 1 > ${resultFilePath} || true"
-
                     // Read and echo the result for log output
                     sh "cat ${resultFilePath} || true"
-
                     // Check if the web test was successful (HTTP 200)
                     def result = readFile("${resultFilePath}").trim()
                     if (result == 'HTTP/1.1 200 OK' || true) {
@@ -58,27 +50,24 @@ pipeline {
                 echo 'ST3 6509183p: Test result for TEST server is generated: TEST-result-file'
             }
         }
-
         stage('ST4 6509183p') {
             steps {
                 echo 'ST4 6509183p: TEST server’s testing result has been inspected'
 
-                    
+                    script {
+                        def env.userInput = input(id: 'ProceedProductionOrRollbackTest', message: 'Choose Proceed Production or Rollback Test?', parameters: [choice(name: 'Choice', choices: 'Proceed Production\nRollback Test', description: 'Select your choice')])
+                    }
             }
         }
 
         stage('ST5 6509183p') {
             steps {
                 script {
-script {
-                        def env.userInput = input(id: 'ProceedProductionOrRollbackTest', message: 'Choose Proceed Production or Rollback Test?', parameters: [choice(name: 'Choice', choices: 'Proceed Production\nRollback Test', description: 'Select your choice')])
-                    }
                     if (env.userInput == 'Proceed Production') {
                         echo 'ST5 6509183p: Proceed to Production Phase'
 
                         // Run bolt script
                         sh "bolt script run 6509183p_script.sh --targets TESTsvr6509183p,PRODsvr6509183p || true"
-
                     } else {
                         echo 'ST5 6509183p: Rollback Test server'
                         // Define the backup file path and the target directory
@@ -87,16 +76,13 @@ script {
                 
                         // Remove current files
                         sh "rm -rf ${targetDirectory}/* || true"
-
                         // Extract files from the backup image
                         sh "tar -xzf ${backupFilePath} -C ${targetDirectory} || true"
-
                         echo 'Rollback completed successfully'
                     }
                 }
             }
         }
-
         stage('ST6 6509183p') {
             steps {
                 script {
