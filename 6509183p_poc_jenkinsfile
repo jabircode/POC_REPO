@@ -63,15 +63,16 @@ pipeline {
             steps {
                 echo 'ST4 6509183p: TEST server’s testing result has been inspected'
 
-                    script {
-                        def env.userInput = input(id: 'ProceedProductionOrRollbackTest', message: 'Choose Proceed Production or Rollback Test?', parameters: [choice(name: 'Choice', choices: 'Proceed Production\nRollback Test', description: 'Select your choice')])
-                    }
+                    
             }
         }
 
         stage('ST5 6509183p') {
             steps {
                 script {
+script {
+                        def env.userInput = input(id: 'ProceedProductionOrRollbackTest', message: 'Choose Proceed Production or Rollback Test?', parameters: [choice(name: 'Choice', choices: 'Proceed Production\nRollback Test', description: 'Select your choice')])
+                    }
                     if (env.userInput == 'Proceed Production') {
                         echo 'ST5 6509183p: Proceed to Production Phase'
 
